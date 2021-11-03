@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AspectVGrid<Item, ItemView>: View where Item : Identifiable, ItemView : View {
+struct AspectVGrid<Item, ItemView>: View where Item : Identifiable, ItemView : View { //??
     private var items: [Item]
     private var viewForItem: (Item) -> ItemView
     

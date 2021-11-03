@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct CardShapesLayout : ViewModifier { //?????????????
+struct CardShapesLayout : ViewModifier { 
     
     var size : CGSize
     var color : Color

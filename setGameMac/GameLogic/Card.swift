@@ -14,7 +14,7 @@ struct Card: Identifiable {
     let shape: CardShape
     let shapeCount: ShapeCount
     let texture: Texture
-    let color: Color
+    let color: ShapeColor
     
     
     enum CardShape: Int, CaseIterable {
@@ -35,7 +35,7 @@ struct Card: Identifiable {
         case halffill
     }
     
-    enum Color: Int, CaseIterable {
+    enum ShapeColor: Int, CaseIterable {
         case red
         case purple
         case green
@@ -46,7 +46,7 @@ struct Card: Identifiable {
     var isMisMatch : Bool
     var isRemoved : Bool
     
-    init(shape: CardShape, shapeCount: ShapeCount, texture: Texture, color: Color) {
+    init(shape: CardShape, shapeCount: ShapeCount, texture: Texture, color: ShapeColor) {
         self.id = UUID()
         self.isPartOfSet = false
         self.isSelected = false

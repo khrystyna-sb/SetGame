@@ -16,7 +16,7 @@ struct CardView: View {
     private let cardColor = Color.white
     private let frameColor = Color.gray
     
-    var colorToUIColor: [Card.Color : Color] {
+    var colorToUIColor: [Card.ShapeColor : Color] {
         get {
             return [
                 .red : Color.red,
@@ -34,7 +34,7 @@ struct CardView: View {
     
     private func body (for size : CGSize, of card : Card) -> some View {
         ZStack{
-            RoundedRectangle(cornerRadius: radius).fill(cardColor)
+            RoundedRectangle(cornerRadius: radius).fill(card.statusColor)
             RoundedRectangle(cornerRadius: radius).stroke(lineWidth: frameWidth)
                 .foregroundColor(frameColor)
             
@@ -80,26 +80,35 @@ struct CardView: View {
         }
     }
     
-    
-    //    private func texture(shape: Shape, texture: Card.Texture) {
-    //            switch texture {
-    //            case .stroke:
-    //                shape.stroke(lineWidth : lineWidth)
-    //            default:
-    //                <#code#>
-    //            }
-    //        }
-    
-    
     private func symbolSpacer(for size : CGSize) -> some View {
         let spacingHeightToCardHeight = CGFloat( 0.5 / 6.0)
         return Spacer(minLength : size.height * spacingHeightToCardHeight)
     }
 }
 
+
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
        CardView(card: Card(shape: .capsule, shapeCount: .three, texture: .halffill, color: .purple))
             .padding()
+    }
+}
+
+
+extension Card {
+    var statusColor : Color {
+        let defaultColor = Color.white
+        let chosenColor = Color.gray
+        let setColor = Color.yellow
+        
+        var color = defaultColor
+        
+        if self.isPartOfSet && !self.isRemoved {
+            color = setColor
+        } else if self.isSelected || self.isMisMatch {
+            color = chosenColor
+        }
+        
+        return color
     }
 }

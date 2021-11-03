@@ -12,15 +12,19 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            AspectVGrid(viewModel.cards) { card in
-                CardView(card : card)
+            AspectVGrid(viewModel.cardsInGame) { card in
+                CardView(card: card)
                     .onTapGesture {
-                        //some actions
+                        self.viewModel.chooseCard(card: card)
                     }
             }
+            .onAppear {
+                self.viewModel.newGame()
+            }
         }
-        .padding(5)
     }
+    
+    
 }
 
 
