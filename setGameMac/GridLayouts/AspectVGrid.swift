@@ -12,7 +12,7 @@ struct AspectVGrid<Item, ItemView>: View where Item : Identifiable, ItemView : V
     private var viewForItem: (Item) -> ItemView
     
 
-    init (_ items: [Item], viewForItem: @escaping (Item) -> ItemView) {
+    init (_ items: [Item], @ViewBuilder viewForItem: @escaping (Item) -> ItemView) {
         self.items = items
         self.viewForItem = viewForItem
     }

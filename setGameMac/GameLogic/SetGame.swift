@@ -9,6 +9,7 @@ struct SetGame {
     
     private(set) var cardsInDeck = [Card]()
     private(set) var cardsInGame = [Card]()
+    private(set) var discardPile = [Card]()
     
     private var chosenCards : [Card]? {
         get {
@@ -31,28 +32,23 @@ struct SetGame {
         }
     }
     
-    mutating func dealCards(with numberOfCards: Int) -> Int {
+    mutating func dealCards(with numberOfCards: Int) {
         
-                if let setFoundBefore = setCards {
-                    if setFoundBefore.count == numberOfCards {
-                        setFoundBefore.unmark(in: &cardsInGame)
-                        replaceCards (for : setFoundBefore)
-                    }
-                    return 0
-                }
+        if let setFoundBefore = setCards {
+            if setFoundBefore.count == numberOfCards {
+                setFoundBefore.unmark(in: &cardsInGame)
+                replaceCards (for : setFoundBefore)
+            }
+        }
         
         if cardsInDeck.count >= numberOfCards {
-            for i in 0..<numberOfCards {
+            for _ in 0..<numberOfCards {
                 if let card = cardsInDeck.popLast() {
                     cardsInGame.append(card)
-                    print(i)
                 } else {
                     break
                 }
             }
-            return numberOfCards
-        } else {
-            return 0
         }
     }
     
@@ -87,7 +83,9 @@ struct SetGame {
             if let chosenCards = chosenCards {
                 if chosenCards.count == 3 {
                     if chosenCards.areASet {
-                        chosenCards.markAsSet(in : &cardsInGame)
+                        chosenCards.markAsSet(in: &cardsInGame)
+                        chosenCards.remove(in: &cardsInDeck)
+                        discardPile += chosenCards
                     } else {
                         chosenCards.markAsMisMatch(in : &cardsInGame)
                     }
@@ -119,7 +117,7 @@ private extension Array where Element == Card {
             return sameNumber || threeDifferentNumbers
         }
     }
-
+    
     var haveSameShapeOrThreeDifferentShapes : Bool {
         get {
             let shape0 = self[0].shape
@@ -162,9 +160,9 @@ private extension Array where Element == Card {
         }
     }
     
-    func markAsSet (in cards : inout [Element]) {
+    func markAsSet (in cards: inout [Element]) {
         for card in self {
-            if let index = cards.firstIndex(matching: card){
+            if let index = cards.firstIndex(matching: card) {
                 cards[index].isPartOfSet = true
                 cards[index].isSelected = false
             }

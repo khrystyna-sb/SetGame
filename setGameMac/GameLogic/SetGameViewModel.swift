@@ -18,7 +18,15 @@ final class SetGameViewModel: ObservableObject{
     }
     
     var cardsInGame: [Card] {
-        return gameModel?.cardsInGame ?? [Card]()
+        gameModel?.cardsInGame ?? [Card]()
+    }
+    
+    var discardPile: [Card] {
+        gameModel?.discardPile ?? [Card]()
+    }
+    
+    func deal3Cards() {
+        gameModel?.dealCards(with: 3)
     }
     
     func chooseCard(card chosenCard : Card) {
@@ -26,8 +34,7 @@ final class SetGameViewModel: ObservableObject{
     }
     
     func newGame() {
-        gameModel = SetGame()
-        assert(gameModel?.dealCards(with : numberOfCardsAtStart) == numberOfCardsAtStart)
+        gameModel?.dealCards(with: numberOfCardsAtStart)
     }
     
     init() {

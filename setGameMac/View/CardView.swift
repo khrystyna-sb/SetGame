@@ -7,15 +7,22 @@
 
 import SwiftUI
 
+enum CardConstants {
+    static let aspectRatio: CGFloat = 2/3
+    static let radius: CGFloat = 10.0
+    static let lineWidth: CGFloat = 3.0
+    static let frameWidth: CGFloat = 1.0
+    static let undealtHeight: CGFloat = 90
+    static let undealtWidth = undealtHeight * aspectRatio
+    static let cardColor = Color.white
+    static let frameColor = Color.gray
+}
+
+
 struct CardView: View {
     
     var card : Card
-    private let radius : CGFloat = 10.0
-    private let lineWidth : CGFloat = 3.0
-    private let frameWidth : CGFloat = 1.0
-    private let cardColor = Color.white
-    private let frameColor = Color.gray
-    
+   
     var colorToUIColor: [Card.ShapeColor : Color] {
         get {
             return [
@@ -34,14 +41,14 @@ struct CardView: View {
     
     private func body (for size : CGSize, of card : Card) -> some View {
         ZStack{
-            RoundedRectangle(cornerRadius: radius).fill(card.statusColor)
-            RoundedRectangle(cornerRadius: radius).stroke(lineWidth: frameWidth)
-                .foregroundColor(frameColor)
+            RoundedRectangle(cornerRadius: CardConstants.radius).fill(card.statusColor)
+            RoundedRectangle(cornerRadius: CardConstants.radius).stroke(lineWidth: CardConstants.frameWidth)
+                .foregroundColor(CardConstants.frameColor)
             
             VStack {
                 symbolSpacer(for : size)
                 ForEach(0..<(card.shapeCount.rawValue + 1)) { _ in
-                    self.shape(of: card, with: self.lineWidth)
+                    self.shape(of: card, with: CardConstants.lineWidth)
                         .cardShapesLayout(size: size, color: self.colorToUIColor[card.color]!)
                     self.symbolSpacer(for : size)
                 }
