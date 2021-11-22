@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Card: Identifiable {
     
-    var id : UUID
+    var id: UUID
     let shape: CardShape
     let shapeCount: ShapeCount
     let texture: Texture
